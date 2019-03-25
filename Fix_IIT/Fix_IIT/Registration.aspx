@@ -155,7 +155,7 @@
                 <tr>
                     <td class="auto-style10">&nbsp;</td>
                     <td class="auto-style7">
-                        <asp:Label ID="outputlabel" runat="server" Text="Label" Visible="False"></asp:Label>
+                        <asp:Label ID="outputlabel" runat="server" Text="Label"></asp:Label>
                     </td>
                     <td class="auto-style11">
                         &nbsp;</td>

@@ -11,7 +11,7 @@
             }
         </style>
     </head>
-    <body>
+    <body style="width: 467px; margin-left: 132px">
         <form id="form1" runat="server">
              <div class="auto-style1">
                  <strong>Login Page</strong></div>

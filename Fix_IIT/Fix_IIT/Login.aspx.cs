@@ -27,7 +27,7 @@ namespace Fix_IIT
                 con.Open();
                 string userInvalid = "You have already registered, click click to login.";
 
-                string checkUser = "SELECT count(*) FROM UserData where Email = TextBoxEM.Text AND Password = TextBoxPW.Text";
+                string checkUser = "SELECT count(*) FROM UserData where Email = @email AND password = @password";
                 SqlCommand com = new SqlCommand(checkUser, con);          //connect to the database                             
                 com.Parameters.AddWithValue("@email", TextBoxEmail.Text);
                 com.Parameters.AddWithValue("@password", TextBoxPassword.Text);
@@ -36,6 +36,8 @@ namespace Fix_IIT
                 if (reader.HasRows)
                 {
                     outputlabel.Text = userInvalid;
+                    Response.Write("Password is good"); // we know password is correct
+                    Response.Redirect("WelcomePage.aspx"); // if password is good, redirect them to this page. 
                     reader.Close();
                 }
 

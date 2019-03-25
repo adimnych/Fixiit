@@ -5,9 +5,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+    <style type="text/css">
+        .auto-style1 {
+            height: 386px;
+        }
+    </style>
 </head>
 <body>
-    <form id="form1" runat="server">
+    <form id="form1" runat="server" class="auto-style1">
         <div>
         </div>
         <asp:Label ID="LabelWelcome" runat="server" Text="Welcome to Fix IIT Website!"></asp:Label>
