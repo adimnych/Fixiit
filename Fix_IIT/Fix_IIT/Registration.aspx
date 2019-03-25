@@ -100,7 +100,7 @@
                 <tr>
                     <td class="auto-style10"><strong>E-mail:</strong></td>
                     <td class="auto-style7">
-                        <asp:TextBox ID="TextBoxEM" runat="server" Width="180px" ></asp:TextBox>
+                        <asp:TextBox ID="TextBoxEM" runat="server" Width="180px" OnTextChanged="TextBoxEM_TextChanged" ></asp:TextBox>
                     </td>
                     <td class="auto-style11">
                         <asp:RequiredFieldValidator ID="EmailRequiredFieldValidator3" runat="server" ErrorMessage="Email required" ForeColor="#FF3300" ControlToValidate="TextBoxEM">Email required</asp:RequiredFieldValidator>
@@ -151,6 +151,14 @@
                         <strong>
                         <asp:HyperLink ID="HyperLinkLogin" runat="server" CssClass="auto-style15" NavigateUrl="~/Login.aspx">Already have an Acccount? Click here</asp:HyperLink>
                         </strong></td>
+                </tr>
+                <tr>
+                    <td class="auto-style10">&nbsp;</td>
+                    <td class="auto-style7">
+                        <asp:Label ID="outputlabel" runat="server" Text="Label" Visible="False"></asp:Label>
+                    </td>
+                    <td class="auto-style11">
+                        &nbsp;</td>
                 </tr>
             </table>
         </div>

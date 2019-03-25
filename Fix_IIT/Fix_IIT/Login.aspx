@@ -45,7 +45,9 @@
             </tr>
             <tr>
                 <td class="auto-style3">&nbsp;</td>
-                <td class="auto-style9">&nbsp;</td>
+                <td class="auto-style9">
+                    <asp:Label ID="outputlabel" runat="server" Text="Label" Visible="False"></asp:Label>
+                </td>
                 <td class="auto-style12">&nbsp;</td>
             </tr>
         </table>

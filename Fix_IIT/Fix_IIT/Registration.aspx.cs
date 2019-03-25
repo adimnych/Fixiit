@@ -12,6 +12,7 @@ namespace Fix_IIT
 {
     public partial class Registration : System.Web.UI.Page
     {
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["RegistrationConnectionString"].ConnectionString);
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -26,59 +27,77 @@ namespace Fix_IIT
             //    {
             //        Response.Write("User with this email already exists");
             //    }
-                                                                       
+
             //    con.Close();
             //}
         }
 
-       
+
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            try
+            Page.Validate();
+            if (Page.IsValid)
             {
-                //Catch any errors
+                con.Open();
+                string userInvalid = "You have already registered, please click to login.";
+                string checkuser = "select count(*) from UserData where Email='" + TextBoxEM.Text + "'"; //query language writing for the database
+                SqlCommand command = new SqlCommand(checkuser, con);
+                command.Parameters.AddWithValue("@email", TextBoxEM.Text);
+                command.ExecuteNonQuery();
+                SqlDataReader reader = command.ExecuteReader();
 
-                bool flag = false;
-                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["RegistrationConnectionString"].ConnectionString);
-                con.Open();                                                                             //whenever you open the database, remeber to close the database
-                string insertQuery = "insert into UserData (FirstName, LastName,Email,Password,Country) values (@firstname, @lastname, @email, @password, @country)";
-                SqlCommand cmd = new SqlCommand(insertQuery, con);
-                cmd.Parameters.AddWithValue("@firstname", TextBoxFN.Text); //execute the query
-                cmd.Parameters.AddWithValue("@lastname", TextBoxLN.Text);
-                cmd.Parameters.AddWithValue("@email", TextBoxEM.Text);
-                cmd.Parameters.AddWithValue("@password", TextBoxPW.Text);
-                cmd.Parameters.AddWithValue("@country", DropDownListCountry.SelectedItem.ToString());
 
-                cmd.CommandText = "select * from UserData";
-                cmd.Connection = con;
 
-                SqlDataReader rd = cmd.ExecuteReader();
-                while (rd.Read())
+                if (reader.HasRows)
                 {
-                    if (rd[3].ToString() == TextBoxEM.Text)
-                        flag = true;
-                        break;
+                    outputlabel.Text = userInvalid;
+                    reader.Close();
                 }
-                rd.Close();
 
-                if(flag == true)
+
+                else
                 {
-                    Response.Write("Email already exists");
+                    try
+                    {
+                        con.Open();
+                    }
+                    catch
+                    {
+                        con.Close();
+                        string insertQuery = "insert into UserData (FirstName, LastName,Email,Password,Country) values (@firstname, @lastname, @email, @password, @country)";
+                        SqlCommand cmd = new SqlCommand(insertQuery, con); //Insert command
+
+                        con.Open();
+                        cmd.Parameters.AddWithValue("@firstname", TextBoxFN.Text); //execute the query
+                        cmd.Parameters.AddWithValue("@lastname", TextBoxLN.Text);
+                        cmd.Parameters.AddWithValue("@email", TextBoxEM.Text);
+                        cmd.Parameters.AddWithValue("@password", TextBoxPW.Text);
+                        cmd.Parameters.AddWithValue("@country", DropDownListCountry.SelectedItem.ToString());
+
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+
+                        Response.Redirect("Manager.aspx");
+                        Response.Write("Registration is succesful! ");
+
+                    }
+                    finally
+                    {
+                        con.Close();
+
+
+
+                    }
+
                 }
-                cmd.ExecuteNonQuery();
-                Response.Redirect("Manager.aspx");
-                Response.Write("Registration is succesful! ");
+            }
+        }
 
-                con.Close();
-            }
-            catch(Exception ex)
-            {
-                Response.Write("Error:" + ex.ToString());
-            }
-            
-            }
+        protected void TextBoxEM_TextChanged(object sender, EventArgs e)
+        {
 
- 
+        }
     }
 }
+
