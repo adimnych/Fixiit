@@ -27,7 +27,7 @@ namespace Fix_IIT
                 con.Open();
                 string userInvalid = "You have already registered, click click to login.";
 
-                string checkUser = "SELECT count(*) FROM UserData where Email = TextBoxEmail.Text AND Password = TextBoxPassword.Text";
+                string checkUser = "SELECT count(*) FROM UserData where Email = TextBoxEM.Text AND Password = TextBoxPW.Text";
                 SqlCommand com = new SqlCommand(checkUser, con);          //connect to the database                             
                 com.Parameters.AddWithValue("@email", TextBoxEmail.Text);
                 com.Parameters.AddWithValue("@password", TextBoxPassword.Text);
